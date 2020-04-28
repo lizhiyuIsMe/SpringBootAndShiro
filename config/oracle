@@ -1,0 +1,134 @@
+drop table permission;
+
+CREATE TABLE permission (
+  id varchar(32)  NOT NULL primary key,
+  name varchar(128),
+  url varchar(128)
+);
+
+
+INSERT INTO permission (id, name, url)
+VALUES
+  (sys_guid(),'video_update','/api/video/update');
+  INSERT INTO permission (id, name, url)
+VALUES
+  (sys_guid(),'video_delete','/api/video/delete');
+  INSERT INTO permission (id, name, url)
+VALUES
+  (sys_guid(),'video_add','/api/video/add');
+  INSERT INTO permission (id, name, url)
+VALUES
+  (sys_guid(),'order_list','/api/order/list');
+  INSERT INTO permission (id, name, url)
+VALUES
+  (sys_guid(),'user_list','/api/user/list');
+
+DROP TABLE role;
+
+CREATE TABLE role (
+  id varchar(32)  NOT NULL primary key,
+  name varchar(128),
+  description varchar(64)
+);
+
+
+INSERT INTO role (id, name, description)
+VALUES
+  (sys_guid(),'admin','普通管理员');
+  INSERT INTO role (id, name, description)
+VALUES
+  (sys_guid(),'root','超级管理员');
+  INSERT INTO role (id, name, description)
+VALUES
+  (sys_guid(),'editor','审核人员');
+
+
+
+
+DROP TABLE role_permission;
+
+CREATE TABLE role_permission (
+  id varchar(32)  NOT NULL primary key,
+  role_id  varchar(32),
+  permission_id  varchar(32)
+);
+
+
+INSERT INTO role_permission (id, role_id, permission_id)
+VALUES
+  (sys_guid(),3,1);
+  INSERT INTO role_permission (id, role_id, permission_id)
+VALUES
+  (sys_guid(),3,2);
+  INSERT INTO role_permission (id, role_id, permission_id)
+VALUES
+  (sys_guid(),3,3);
+  INSERT INTO role_permission (id, role_id, permission_id)
+VALUES
+  (sys_guid(),2,1);
+  INSERT INTO role_permission (id, role_id, permission_id)
+VALUES
+
+  (sys_guid(),2,2);
+INSERT INTO role_permission (id, role_id, permission_id)
+VALUES
+  (sys_guid(),2,3);
+INSERT INTO role_permission (id, role_id, permission_id)
+VALUES
+  (sys_guid(),2,4);
+
+
+DROP TABLE  users;
+
+CREATE TABLE USERs (
+  id varchar(32)   primary key,
+  username varchar(32),
+  password varchar(256),
+  create_time date,
+  salt varchar(128)
+);
+
+
+INSERT INTO users (id, username, password, create_time, salt)
+VALUES
+  (sys_guid(),'李志宇','4280d89a5a03f812751f504cc10ee8a5',NULL,NULL);
+  INSERT INTO users (id, username, password, create_time, salt)
+VALUES
+  (sys_guid(),'刘洁岩','5927c5d64d94a5786f90003aa26d0159',NULL,NULL);
+  INSERT INTO users (id, username, password, create_time, salt)
+VALUES
+  (sys_guid(),'小工','d022646351048ac0ba397d12dfafa304',NULL,NULL);
+
+
+DROP TABLE user_role;
+
+CREATE TABLE user_role (
+  id varchar(32)  NOT NULL primary key,
+  role_id varchar(32) DEFAULT NULL,
+  user_id varchar(32) DEFAULT NULL,
+  remarks varchar(64) DEFAULT NULL
+);
+
+
+INSERT INTO user_role (id, role_id, user_id, remarks)
+VALUES
+  (sys_guid(),3,1,'二当家是editor');
+  INSERT INTO user_role (id, role_id, user_id, remarks)
+VALUES
+  (sys_guid(),1,3,'jack是admin');
+  INSERT INTO user_role (id, role_id, user_id, remarks)
+VALUES
+  (sys_guid(),2,3,'jack是root');
+
+  INSERT INTO user_role (id, role_id, user_id, remarks)
+VALUES
+  (sys_guid(),3,3,'jack是editor');
+  INSERT INTO user_role (id, role_id, user_id, remarks)
+VALUES
+  (sys_guid(),1,2,'大当家是admin');
+  INSERT INTO user_role (id, role_id, user_id, remarks)
+VALUES
+  (sys_guid(),1,1,'二当家是admin');
+  INSERT INTO user_role (id, role_id, user_id, remarks)
+VALUES
+  (sys_guid(),2,1,'二当家是root');

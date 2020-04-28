@@ -1,0 +1,99 @@
+DROP TABLE IF EXISTS `permission`;
+
+CREATE TABLE `permission` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `name` varchar(128) DEFAULT NULL COMMENT '名称',
+  `url` varchar(128) DEFAULT NULL COMMENT '接口路径',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+
+INSERT INTO `permission` (`id`, `name`, `url`)
+VALUES
+	(1,'video_update','/api/video/update'),
+	(2,'video_delete','/api/video/delete'),
+	(3,'video_add','/api/video/add'),
+	(4,'order_list','/api/order/list'),
+	(5,'user_list','/api/user/list');
+
+DROP TABLE IF EXISTS `role`;
+
+CREATE TABLE `role` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `name` varchar(128) DEFAULT NULL COMMENT '名称',
+  `description` varchar(64) DEFAULT NULL COMMENT '描述',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+
+INSERT INTO `role` (`id`, `name`, `description`)
+VALUES
+	(1,'admin','普通管理员'),
+	(2,'root','超级管理员'),
+	(3,'editor','审核人员');
+
+
+
+
+DROP TABLE IF EXISTS `role_permission`;
+
+CREATE TABLE `role_permission` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `role_id` int(11) DEFAULT NULL,
+  `permission_id` int(11) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+
+INSERT INTO `role_permission` (`id`, `role_id`, `permission_id`)
+VALUES
+	(1,3,1),
+	(2,3,2),
+	(3,3,3),
+	(4,2,1),
+	(5,2,2),
+	(6,2,3),
+	(7,2,4);
+
+
+DROP TABLE IF EXISTS `user`;
+
+CREATE TABLE `user` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `username` varchar(128) DEFAULT NULL COMMENT '用户名',
+  `password` varchar(256) DEFAULT NULL COMMENT '密码',
+  `create_time` datetime DEFAULT NULL,
+  `salt` varchar(128) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+
+INSERT INTO `user` (`id`, `username`, `password`, `create_time`, `salt`)
+VALUES
+	(1,'二当家小D','4280d89a5a03f812751f504cc10ee8a5',NULL,NULL),
+	(2,'大当家','5927c5d64d94a5786f90003aa26d0159',NULL,NULL),
+	(3,'jack','d022646351048ac0ba397d12dfafa304',NULL,NULL);
+
+
+DROP TABLE IF EXISTS `user_role`;
+
+CREATE TABLE `user_role` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `role_id` int(11) DEFAULT NULL,
+  `user_id` int(11) DEFAULT NULL,
+  `remarks` varchar(64) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+
+INSERT INTO `user_role` (`id`, `role_id`, `user_id`, `remarks`)
+VALUES
+	(1,3,1,'二当家小D是editor'),
+	(2,1,3,'jack是admin'),
+	(3,2,3,'jack是root'),
+	(4,3,3,'jack是editor'),
+	(5,1,2,'大当家是admin'),
+	(8,1,1,'二当家小D是admin'),
+	(10,2,1,'二当家小D是root');
+
+
