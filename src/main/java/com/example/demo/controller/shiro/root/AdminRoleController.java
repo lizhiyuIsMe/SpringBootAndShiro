@@ -4,9 +4,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-//有 root 角色才能访问
+//有 admin 角色才能访问
 @RestController
-@RequestMapping("/root")
+@RequestMapping("/admin")
 public class AdminRoleController {
 
     @PostMapping("/query")

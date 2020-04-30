@@ -43,7 +43,7 @@ public class PublicController {
             subject.login(authenticationToken);
 
             info.put("msg","登录成功");
-            info.put("session_id", subject.getSession().getId());
+            info.put("JSESSIONID", subject.getSession().getId());
 
             return  JsonData.buildSuccess(info);
         }catch (Exception e){

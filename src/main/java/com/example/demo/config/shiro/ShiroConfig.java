@@ -2,6 +2,8 @@ package com.example.demo.config.shiro;
 
 import com.example.demo.config.shiro.filter.CustomRolesOrAuthorizationFilter;
 import com.example.demo.config.shiro.realm.CustomRealm;
+import com.example.demo.config.shiro.sessionid.CustomCreateSessionid;
+import org.apache.shiro.authc.credential.HashedCredentialsMatcher;
 import org.apache.shiro.session.mgt.SessionManager;
 import org.apache.shiro.spring.LifecycleBeanPostProcessor;
 import org.apache.shiro.spring.security.interceptor.AuthorizationAttributeSourceAdvisor;
@@ -54,6 +56,7 @@ public class ShiroConfig implements EnvironmentAware {
         defaultWebSecurityManager.setCacheManager(cacheManager());
         //设置会话管理  session的缓存方式
         defaultWebSecurityManager.setSessionManager(sessionManager());
+
         return defaultWebSecurityManager;
     }
 
@@ -78,9 +81,9 @@ public class ShiroConfig implements EnvironmentAware {
      */
     @Bean
     public SessionManager sessionManager(){
-        //默认生成的sessionId 的name 是JSESSIONID
+        //默认生成的sessionId 的name 是是JSESSIONID
+        //如果想要修改存储的sessionid 的key为token 不为JSESSIONID 则重写这个类中的方法
         DefaultWebSessionManager defaultWebSessionManager=new DefaultWebSessionManager();
-
         //设置超时时间默认是20秒
         //defaultSessionManager.setGlobalSessionTimeout(20000);
         defaultWebSessionManager.setSessionDAO(getRedisSessionDAO());
@@ -90,8 +93,16 @@ public class ShiroConfig implements EnvironmentAware {
     @Bean
     public RedisSessionDAO getRedisSessionDAO(){
         RedisSessionDAO redisSessionDAO=new RedisSessionDAO();
+        //自定义设置sessionid的值
+        redisSessionDAO.setSessionIdGenerator(customCreateSessionid());
+
         redisSessionDAO.setRedisManager(getRedisManager());
         return redisSessionDAO;
+    }
+    //设置创建的sessionid 的值
+    @Bean
+    public CustomCreateSessionid customCreateSessionid(){
+        return  new CustomCreateSessionid();
     }
 //会话管理结束
 
@@ -101,7 +112,8 @@ public class ShiroConfig implements EnvironmentAware {
      * 这个缓存在认证的时候没有开启,在授权的时候回开启
      */
     @Bean
-    public RedisCacheManager cacheManager(){
+    public RedisCacheManager cacheManager()
+    {
         RedisCacheManager redisCacheManager = new RedisCacheManager();
         redisCacheManager.setRedisManager(getRedisManager());
         //设置过期时间，单位是秒，20s,
@@ -128,10 +140,32 @@ public class ShiroConfig implements EnvironmentAware {
     @Bean
     public CustomRealm customRealm(){
         CustomRealm customRealm=new CustomRealm();
+
+        //可以设置加密方法
+        //customRealm.setCredentialsMatcher(hashedCredentialsMatcher());
         return customRealm;
     }
 
 
+    //这个是指定密码加密的方法
+    //这个对象是在认证时候的时候可以使用  在认证Realm中有这个属性
+    @Bean
+    public HashedCredentialsMatcher hashedCredentialsMatcher(){
+        HashedCredentialsMatcher credentialsMatcher = new HashedCredentialsMatcher();
+
+        //设置散列算法：这里使用的MD5算法
+        credentialsMatcher.setHashAlgorithmName("md5");
+
+        //散列次数，好比散列2次，相当于md5(md5(xxxx))
+        credentialsMatcher.setHashIterations(2);
+//        注册时候直接创建密码 的加密过程
+//        String hashName = "md5";
+//        String pwd = "123";
+//        Object result = new SimpleHash(hashName, pwd, null, 2);
+//        System.out.println(result);
+
+        return credentialsMatcher;
+    }
     private void setShiroFilter(ShiroFilterFactoryBean shiroFilterFactoryBean) {
 
         //org.apache.shiro.web.filter.mgt.DefaultFilter  //拦截器枚举类
