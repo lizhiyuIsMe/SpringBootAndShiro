@@ -12,7 +12,6 @@ import org.apache.shiro.web.filter.authz.AuthorizationFilter;
  * 当shiro底层的拦截满足不了需求时,可以自己定义一个拦截器
  * 这个拦截器 标识配置时只要有一个角色满足即可访问(shrio自带的要所有角色都含有才能访问)
  */
-
 public class CustomRolesOrAuthorizationFilter extends AuthorizationFilter {
 
     public CustomRolesOrAuthorizationFilter() {

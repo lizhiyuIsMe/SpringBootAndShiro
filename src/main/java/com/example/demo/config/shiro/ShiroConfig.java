@@ -194,6 +194,7 @@ public class ShiroConfig implements EnvironmentAware {
 
         //匿名可以访问，也是就游客模式
         filterChainDefinitionMap.put("/pub/**","anon");
+        //filterChainDefinitionMap.put("/pub/**","xssFilter");
 
         //登录用户才可以访问
         filterChainDefinitionMap.put("/authc/**","authc");
@@ -218,9 +219,6 @@ public class ShiroConfig implements EnvironmentAware {
         filterMap.put("roleOrFilter",new CustomRolesOrAuthorizationFilter());
         shiroFilterFactoryBean.setFilters(filterMap);
     }
-
-
-
 
     // 下面配置的不用管了,配上就行
 

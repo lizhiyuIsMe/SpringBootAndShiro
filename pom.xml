@@ -73,6 +73,13 @@
 <!--            <artifactId>ojdbc6</artifactId>-->
 <!--            <version>12.1.0.1</version>-->
 <!--        </dependency>-->
+
+<!--        String查用工具类 和xss工具类-->
+        <dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-lang3</artifactId>
+            <version>3.0</version>
+        </dependency>
     </dependencies>
 
     <build>
