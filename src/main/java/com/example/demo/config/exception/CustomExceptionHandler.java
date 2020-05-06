@@ -1,6 +1,7 @@
 package com.example.demo.config.exception;
 
 import com.example.demo.util.JsonData;
+import com.example.demo.util.exception.CustomException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ExceptionHandler;

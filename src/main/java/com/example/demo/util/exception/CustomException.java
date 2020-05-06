@@ -1,4 +1,4 @@
-package com.example.demo.config.exception;
+package com.example.demo.util.exception;
 /*
 * 自定义异常
 */

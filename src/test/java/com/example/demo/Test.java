@@ -3,7 +3,7 @@ package com.example.demo;
 
 import org.apache.commons.lang3.StringEscapeUtils;
 
-public class Test extends TestParent {
+public class Test {
     public void test(){
         System.out.printf("son");
     }
