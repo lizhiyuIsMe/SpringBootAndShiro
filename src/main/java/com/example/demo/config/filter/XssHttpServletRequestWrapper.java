@@ -33,10 +33,10 @@ public class XssHttpServletRequestWrapper extends HttpServletRequestWrapper {
         }
     }
 
-    @Override
-    public Enumeration<String> getHeaders(String name){
-         throw  new RuntimeException("这里不想写了,别用这里代码");
-    }
+//    @Override
+//    public Enumeration<String> getHeaders(String name){
+//         throw  new RuntimeException("");
+//    }
 
     @Override
     public Map<String, String[]> getParameterMap() {

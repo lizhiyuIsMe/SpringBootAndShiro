@@ -193,7 +193,7 @@ public class ShiroConfig implements EnvironmentAware {
         filterChainDefinitionMap.put("/logout","logout");
 
         //匿名可以访问，也是就游客模式
-        filterChainDefinitionMap.put("/pub/**","anon");
+        filterChainDefinitionMap.put("/pub/**,/test/**","anon");
         //filterChainDefinitionMap.put("/pub/**","xssFilter");
 
         //登录用户才可以访问

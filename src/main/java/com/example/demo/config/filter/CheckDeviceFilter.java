@@ -42,9 +42,9 @@ public class CheckDeviceFilter implements Filter {
 
         //用手机访问 并且访问路径不是手机地址
         if(isMobile){
-            log.info("当前用手机访问");
+            log.info("当前用手机或电脑访问");
         }else if(!isMobile){
-            log.info("当前用电脑访问");
+            log.info("爬虫访问");
         }
         filterChain.doFilter(serletRequest, servletResponse);
     }

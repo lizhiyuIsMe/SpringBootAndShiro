@@ -1,5 +1,9 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <configuration>
+    <!--日志级别  debug< info < error-->
+
+
+
 
     <appender name="consoleApp" class="ch.qos.logback.core.ConsoleAppender">
         <layout class="ch.qos.logback.classic.PatternLayout">
@@ -72,17 +76,16 @@
         </rollingPolicy>
     </appender>
 
+
     <!--用于统计数据-->
     <logger name="dataLogger">
         <level value="INFO" />
         <appender-ref ref="dataApp" />
     </logger>
 
-
-    <root level="DEBUG">
+    <root level="INFO">
         <appender-ref ref="consoleApp"/>
         <appender-ref ref="fileInfoApp"/>
         <appender-ref ref="fileErrorApp"/>
     </root>
-
 </configuration>

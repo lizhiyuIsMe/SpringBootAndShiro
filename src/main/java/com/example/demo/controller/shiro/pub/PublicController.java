@@ -23,11 +23,11 @@ public class PublicController {
     private UserService userService;
 
 //    请求json格式
-//    {
-//        "userName":1,
-//        "password":1,
-//        "readMe":1
-//    }
+//{
+//    "userid":"9689DCCC76394912964298DCDD7F1E23",
+//        "password":"4280d89a5a03f812751f504cc10ee8a5",
+//        "readMe":""
+//}
     @PostMapping("/login")
     public JsonData  login(@RequestBody QueryUser queryUser, HttpServletRequest request, HttpServletResponse response){
         Map<String,Object> info = new HashMap<>();

@@ -74,7 +74,7 @@
 <!--            <version>12.1.0.1</version>-->
 <!--        </dependency>-->
 
-<!--        String查用工具类 和xss工具类-->
+        <!-- String查用工具类 和xss工具类-->
         <dependency>
             <groupId>org.apache.commons</groupId>
             <artifactId>commons-lang3</artifactId>
@@ -102,25 +102,39 @@
             <artifactId>gson</artifactId>
             <version>2.8.0</version>
         </dependency>
-
-
-
+        <dependency>
+            <groupId>com.alibaba</groupId>
+            <artifactId>fastjson</artifactId>
+            <version>1.2.58</version>
+        </dependency>
 
         <dependency>
             <groupId>org.jsoup</groupId>
             <artifactId>jsoup</artifactId>
             <version>1.7.2</version>
         </dependency>
-        <dependency>
-            <groupId>com.jayway.jsonpath</groupId>
-            <artifactId>json-path</artifactId>
-            <version>2.2.0</version>
-        </dependency>
+<!--        <dependency>-->
+<!--            <groupId>com.jayway.jsonpath</groupId>-->
+<!--            <artifactId>json-path</artifactId>-->
+<!--            <version>2.2.0</version>-->
+<!--        </dependency>-->
         <!--用于解析html-->
         <dependency>
             <groupId>net.sourceforge.htmlcleaner</groupId>
             <artifactId>htmlcleaner</artifactId>
             <version>2.10</version>
+        </dependency>
+
+        <!--es导包,用于es7.2 最好要导入相同版本-->
+        <dependency>
+            <groupId>org.elasticsearch.client</groupId>
+            <artifactId>elasticsearch-rest-high-level-client</artifactId>
+            <version>7.1.1</version>
+        </dependency>
+        <dependency>
+            <groupId>org.elasticsearch</groupId>
+            <artifactId>elasticsearch</artifactId>
+            <version>7.1.1</version>
         </dependency>
     </dependencies>
 
