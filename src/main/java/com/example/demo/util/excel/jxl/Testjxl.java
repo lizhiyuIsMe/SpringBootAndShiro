@@ -1,4 +1,4 @@
-package com.example.demo.util.excel;
+package com.example.demo.util.excel.jxl;
 
 import jxl.read.biff.BiffException;
 
@@ -44,7 +44,7 @@ public class Testjxl {
         //这个sheet的第一行数据为空,第一行是标题在模板中
         sheet[0]=new String[]{""};
         //sheet的第二行数据
-        sheet[1]=new String[]{"1","2"};
+        sheet[1]=new String[]{"2013/3/7","2.1"};
     }
 
     private static void processFirstSheet(String[][][] sheets) {
@@ -55,7 +55,7 @@ public class Testjxl {
         //这个sheet的第一行数据为空,第一行是标题在模板中
         sheet[0]=new String[]{""};
         //sheet的第二行数据
-        sheet[1]=new String[]{"1","2"};
-        sheet[2]=new String[]{"1","2"};
+        sheet[1]=new String[]{"2013/3/7","2"};
+        sheet[2]=new String[]{"2013/3/7","2"};
     }
 }

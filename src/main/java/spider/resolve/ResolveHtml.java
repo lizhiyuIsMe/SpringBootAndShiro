@@ -40,7 +40,9 @@ public class ResolveHtml {
         //是分页页面
         if(1==1){
             //获得下一页url
-            Object[] urls = node.evaluateXPath("/body/div[2]/div/div[2]/div[2]/ul/li[*]/div");
+           // Object[] urls = node.evaluateXPath("/body/div[2]/div/div[2]/div[2]/ul/li[*]/div");
+            Object[] urls = node.evaluateXPath("//*[@id=\"codeImg\"]");
+
             //将url放到highQueue中
             for(Object url : urls) {
                 TagNode n = (TagNode) url;

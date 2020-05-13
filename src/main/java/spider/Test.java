@@ -16,7 +16,7 @@ public class Test {
     public volatile  static boolean flag=true;
     public static void main(String[] args) throws IOException, XPatherException, ExecutionException, InterruptedException {
         //添加url
-        CustomQueue.highQueuepush("https://so.csdn.net/so/search/s.do?p=1&q=jsoup%E8%A7%A3%E6%9E%90html&t=&viparticle=&domain=&o=&s=&u=&l=&f=");
+        CustomQueue.highQueuepush("https://gec.ve-china.com.cn/public/login/");
         while(flag){
           new Test().test();
         }
