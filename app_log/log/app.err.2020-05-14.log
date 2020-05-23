@@ -1,0 +1,32 @@
+2020-05-14 11:25:51.214 ERROR[main]org.springframework.boot.SpringApplication.reportFailure:863 -Application run failed
+org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'org.springframework.aop.config.internalAutoProxyCreator': Initialization of bean failed; nested exception is java.lang.NoClassDefFoundError: org/aspectj/lang/annotation/Pointcut
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:581)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:495)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.lambda$doGetBean$0(AbstractBeanFactory.java:317)
+	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:222)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:315)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:204)
+	at org.springframework.context.support.PostProcessorRegistrationDelegate.registerBeanPostProcessors(PostProcessorRegistrationDelegate.java:224)
+	at org.springframework.context.support.AbstractApplicationContext.registerBeanPostProcessors(AbstractApplicationContext.java:710)
+	at org.springframework.context.support.AbstractApplicationContext.refresh(AbstractApplicationContext.java:535)
+	at org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext.refresh(ServletWebServerApplicationContext.java:140)
+	at org.springframework.boot.SpringApplication.refresh(SpringApplication.java:780)
+	at org.springframework.boot.SpringApplication.refreshContext(SpringApplication.java:412)
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:333)
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1277)
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1265)
+	at com.example.demo.DemoApplication.main(DemoApplication.java:13)
+Caused by: java.lang.NoClassDefFoundError: org/aspectj/lang/annotation/Pointcut
+	at org.springframework.aop.aspectj.annotation.AbstractAspectJAdvisorFactory.<clinit>(AbstractAspectJAdvisorFactory.java:62)
+	at org.springframework.aop.aspectj.annotation.AnnotationAwareAspectJAutoProxyCreator.initBeanFactory(AnnotationAwareAspectJAutoProxyCreator.java:82)
+	at org.springframework.aop.framework.autoproxy.AbstractAdvisorAutoProxyCreator.setBeanFactory(AbstractAdvisorAutoProxyCreator.java:63)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.invokeAwareMethods(AbstractAutowireCapableBeanFactory.java:1721)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.initializeBean(AbstractAutowireCapableBeanFactory.java:1686)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:573)
+	... 15 common frames omitted
+Caused by: java.lang.ClassNotFoundException: org.aspectj.lang.annotation.Pointcut
+	at java.net.URLClassLoader.findClass(URLClassLoader.java:381)
+	at java.lang.ClassLoader.loadClass(ClassLoader.java:424)
+	at sun.misc.Launcher$AppClassLoader.loadClass(Launcher.java:349)
+	at java.lang.ClassLoader.loadClass(ClassLoader.java:357)
+	... 21 common frames omitted

@@ -1,6 +1,8 @@
 package com.example.demo.study.spring.util;
 
 
+import com.example.demo.study.spring.aop.Aop;
+
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
@@ -21,18 +23,43 @@ public class BeanFactory {
 
      public BeanFactory(List<BeanDefined> beanDefinedList) throws Exception {
           this.beanDefinedList = beanDefinedList;
+          //先初始后后置处理器
           for(BeanDefined bean:beanDefinedList){
              if("singleton".equals(bean.getScope())){
-                  Object obj = Class.forName(bean.getBeanClassPath()).newInstance();
+                  Class<?> aClass = Class.forName(bean.getBeanClassPath());
                   //如果是一个后置处理器
-                  if(obj instanceof BeanPostProcess)  //也可以获得他的所有接口class.getInterfaces()判断是不是
-                  {
+                  if(isBeanPostProcess(aClass)){
+                       Object obj = aClass.newInstance();
                        beanPostProcesses.add((BeanPostProcess) obj);
+                       instanceMap.put(bean.getBeadId(), obj);
                   }
-                  instanceMap.put(bean.getBeadId(), obj);
 
              }
           }
+          //初始化普通bean
+          for(BeanDefined bean:beanDefinedList){
+               if("singleton".equals(bean.getScope())){
+                    Object obj = Class.forName(bean.getBeanClassPath()).newInstance();
+                    //查看这个对象是否要被aop代理,如果要被代理则直接创建这个类的代理对象缓存
+                    for(BeanPostProcess beanPostProcess:beanPostProcesses){
+                         if(beanPostProcess instanceof Aop){
+                              obj=beanPostProcess.postProcessBeforeInitialization(obj,bean.getBeadId());
+                         }
+                    }
+                    instanceMap.put(bean.getBeadId(), obj);
+               }
+          }
+     }
+
+     //判断是否是后置处理器
+     private boolean isBeanPostProcess(Class<?> aClass) {
+          Class<?>[] interfaces = aClass.getInterfaces();
+          for(Class cc : interfaces){
+               if(cc == BeanPostProcess.class){
+                   return true;
+               }
+          }
+          return false;
      }
 
 //     public void addBeanDefined(BeanDefined beanDefined){
@@ -82,14 +109,18 @@ public class BeanFactory {
           }
           //调用所有后置处理器的前置方法
           for(BeanPostProcess beanPostProcess:beanPostProcesses){
-               obj=beanPostProcess.postProcessBeforeInitialization(obj,beanId2);
+               if(beanPostProcess instanceof Common){
+                     obj=beanPostProcess.postProcessBeforeInitialization(obj,beanId2);
+               }
           }
           //在这里调用初始化方法
           //在这里进行属性注入
           initValue(obj,property);
           //调用所有后置处理器的后置方法
           for(BeanPostProcess beanPostProcess:beanPostProcesses){
-               obj=beanPostProcess.postProcessAfterInitialization(obj,beanId2);
+               if(beanPostProcess instanceof Common) {
+                    obj = beanPostProcess.postProcessAfterInitialization(obj, beanId2);
+               }
           }
           return obj;
      }

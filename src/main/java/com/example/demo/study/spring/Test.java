@@ -38,6 +38,11 @@ public class Test {
         beanDefinedB.setBeadId("myBeanPostProcess");
         beanDefinedB.setBeanClassPath("com.example.demo.study.spring.util.MyBeanPostProcess");
 
+        //定义一个Aop的后置处理器
+        BeanDefined beanDefinedD=new BeanDefined();
+        beanDefinedD.setBeadId("aopBeanPostProcess");
+        beanDefinedD.setBeanClassPath("com.example.demo.study.spring.aop.AopBeanPostProcess");
+
 
         //将对象放到ioc容器中
         List<BeanDefined> list=new ArrayList<BeanDefined>();
@@ -45,6 +50,7 @@ public class Test {
         list.add(beanDefinedA);
         list.add(beanDefinedB);
         list.add(beanDefinedC);
+        list.add(beanDefinedD);
 
         //创建ioc容器对象
         BeanFactory beanFactory = new BeanFactory(list);
