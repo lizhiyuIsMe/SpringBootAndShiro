@@ -111,7 +111,7 @@ public class ShiroConfig implements EnvironmentAware {
      * 配置具体cache实现类,缓存管理
      * 这个缓存在认证的时候没有开启,在授权的时候回开启
      */
-    @Bean
+    @Bean(name="redisCacheManager")   //这使用redis和  shiro整合的redis有重名的bean
     public RedisCacheManager cacheManager()
     {
         RedisCacheManager redisCacheManager = new RedisCacheManager();
