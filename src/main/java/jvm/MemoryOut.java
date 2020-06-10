@@ -2,6 +2,7 @@ package jvm;
 
 
 import java.util.HashSet;
+import java.util.Objects;
 import java.util.Random;
 import java.util.Set;
 
@@ -24,8 +25,13 @@ public class MemoryOut {
         set.remove(memoryOut);
         System.out.println(set.size());
     }
+//    @Override
+//    public int hashCode() {
+//        return Integer.parseInt("213123") + this.age;
+//    }
+
     @Override
     public int hashCode() {
-        return Integer.parseInt("213123") + this.age;
+     return    Objects.hash(age);
     }
 }

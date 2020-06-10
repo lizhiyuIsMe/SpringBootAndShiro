@@ -9,27 +9,29 @@ import java.util.Map;
 public class HotClassExecute implements Runnable {
 
     public static Map<String, Long> map = new HashMap<String, Long>();
+    //项目路径
     public static String projectPath="";
-    public static String targetPath = "";
-    public static String comPath = "";
+    //java路径
+    public static String javaPath;
     public static MyHotClassLoader myHotClassLoader;
 
     public HotClassExecute() throws IOException {
         File file = new File("");
         this.projectPath=file.getCanonicalPath();
-        this.targetPath =projectPath+File.separator +"src"+File.separator +"main"+File.separator+"java"+File.separator;
-        this.myHotClassLoader=new MyHotClassLoader(projectPath+File.separator +"src"+File.separator +"main"+File.separator+"java");
+        this.javaPath =projectPath+File.separator +"src"+File.separator +"main"+File.separator+"java";
+        myHotClassLoader=new MyHotClassLoader();
     }
 
     @Override
     public void run() {
+        //循环遍历所有java目录下的 .java文件
+        File parent = new File(this.javaPath);
+        //将所有的文件的修改时间放到map中
+        execute(parent,"lastTimeAddTime");
         while (true) {
-            File parent = new File(this.targetPath);
-            try {
-                execute(parent);
-            } catch (ClassNotFoundException e) {
-                e.printStackTrace();
-            }
+            //如果是新文件则添加到Map中
+            //如果不是新文件看修改时间是否改变  如果改变则重新加载这个类
+            execute(parent,"lastTimeUpdate");
             try {
                 Thread.sleep(2000);
             } catch (InterruptedException e) {
@@ -38,37 +40,49 @@ public class HotClassExecute implements Runnable {
         }
     }
 
-    private void execute(File parent) throws ClassNotFoundException {
-        if (parent.isDirectory()) {
-            File[] files = parent.listFiles();
-            for (File file : files) {
-                execute(file);
-            }
-        } else {
-            //获得文件的修改时间
-            long lastModifiedTime = parent.lastModified();
-            String path = parent.getPath();
-            String absPath = path.replace(projectPath+File.separator +"src"+File.separator +"main"+File.separator+"java"+File.separator, "");
-            absPath= absPath.replace(File.separator, ".");
-            if (absPath.endsWith(".java")) {
-                absPath = absPath.replace(".java", "");
-                boolean flag = map.containsKey(absPath);
-                System.out.println(lastModifiedTime);
-                if(flag && absPath.endsWith("People")){
-                    System.out.println(lastModifiedTime);
-                    Long aLong = map.get(absPath);
-                    if(!aLong.equals(lastModifiedTime)){
-                        myHotClassLoader.loadClass(absPath);
-                        map.put(absPath,lastModifiedTime);
-                    }
-                }else{
-                    myHotClassLoader.loadClass(absPath);
+
+        //将所有的文件的修改时间放到map中
+        private void execute(File parent,String type){
+            if (parent.isDirectory()) {
+                File[] files = parent.listFiles();
+                for (File file : files) {
+                    execute(file,type);
+                }
+            } else {
+                //获得文件的修改时间
+                long lastModifiedTime = parent.lastModified();
+                //全路径
+                String absPath = parent.getAbsolutePath();
+                if ("lastTimeAddTime".equals(type)) {
                     map.put(absPath,lastModifiedTime);
+                }else{
+                    lastTimeUpdate(lastModifiedTime,absPath);
                 }
             }
-
-            //如果不包含什么都不做,类加载器按需加载节省空间
         }
-    }
-
+        public void lastTimeUpdate(long lastModifiedTime, String absPath){
+            //如果是新文件则添加到Map中
+            if(map.containsKey(absPath)){
+                if(map.get(absPath).equals(lastModifiedTime)){
+                   //是什么都不做
+                    return;
+                }else{
+                    //对这个文件加载
+                    try {
+                        absPath = absPath.replace(".java", "");
+                        String substring = absPath.substring(72);
+                        substring = substring.replace("\\", ".");
+                        Class<?> aClass = myHotClassLoader.loadClass(substring);
+                        People o = (People) aClass.newInstance();
+                        System.out.println(aClass.getClassLoader());
+                        o.say();
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                }
+            }else{
+                //放入map中,等待下次修改
+                map.put(absPath,0l);
+            }
+        }
 }
