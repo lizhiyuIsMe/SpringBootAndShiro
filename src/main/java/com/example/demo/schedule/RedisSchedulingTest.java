@@ -24,6 +24,8 @@ import java.util.List;
 @EnableScheduling
 @Configuration
 //redis在定时任务中实现分布式锁
+//1 A定时任务运行,B定时任务得不到锁,A挂了这时锁没有释放,A重新启动他要占有锁么,还是一起和B等待锁的释放
+//2 A定时任务运行,还没有运行完,A的锁已经失效了,B定时任务获得锁执行
 public class RedisSchedulingTest {
     private static final Logger logger = LoggerFactory.getLogger(RedisSchedulingTest.class);
 

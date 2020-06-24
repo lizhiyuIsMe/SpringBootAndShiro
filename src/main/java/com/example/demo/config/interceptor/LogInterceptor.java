@@ -48,7 +48,7 @@ public class LogInterceptor  implements HandlerInterceptor {
             HandlerMethod h = (HandlerMethod) handler;
             sb.append("Controller: ").append(h.getBean().getClass().getName()).append("\n");
             sb.append("Method    : ").append(h.getMethod().getName()).append("\n");
-            sb.append("Params    : ").append(getParamString(request.getParameterMap())).append("\n");
+            sb.append("Params    : ").append(parseParam2String(request.getParameterMap())).append("\n");
             sb.append("URI       : ").append(request.getRequestURI()).append("\n");
             LOGGER.debug(sb.toString());
         }
@@ -95,7 +95,7 @@ public class LogInterceptor  implements HandlerInterceptor {
     /**
      * 将map中的所有信息转化到 String中
      */
-    private String getParamString(Map<String, String[]> map) {
+    private String parseParam2String(Map<String, String[]> map) {
         StringBuilder sb = new StringBuilder();
         for (Map.Entry<String, String[]> e : map.entrySet()) {
             sb.append(e.getKey()).append("=");

@@ -1,8 +1,10 @@
 package com.example.demo.controller.shiro.pub;
 
 import com.example.demo.dto.QueryUser;
+import com.example.demo.service.RedisService.RedisService;
 import com.example.demo.service.UserService;
 import com.example.demo.util.JsonData;
+import org.apache.ibatis.annotations.Param;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.AuthenticationToken;
 import org.apache.shiro.authc.UsernamePasswordToken;
@@ -21,6 +23,8 @@ import java.util.Map;
 public class PublicController {
     @Autowired
     private UserService userService;
+    @Autowired
+    private RedisService redisService;
 
 //    请求json格式
 //{
@@ -50,6 +54,12 @@ public class PublicController {
             e.printStackTrace();
             return JsonData.buildError("账号或者密码错误");
         }
+    }
+
+    @RequestMapping("/testRedisBloom/{value}")
+    public String  testRedisBloom(@PathVariable(name = "value") String value){
+        boolean b = redisService.userIdExists(Integer.parseInt(value));
+        return String.valueOf(b);
     }
 
     @RequestMapping("/need_login")

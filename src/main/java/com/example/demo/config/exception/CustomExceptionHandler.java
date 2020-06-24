@@ -20,7 +20,7 @@ public class CustomExceptionHandler {
           CustomException customException=(CustomException)e;
           return JsonData.buildError(customException.getMsg(),customException.getCode());
       }else{
-          return JsonData.buildError("全局错误");
+          return JsonData.buildError(e.getMessage());
       }
     }
 }

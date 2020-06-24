@@ -38,24 +38,24 @@ public class XssHttpServletRequestWrapper extends HttpServletRequestWrapper {
 //         throw  new RuntimeException("");
 //    }
 
-    @Override
-    public Map<String, String[]> getParameterMap() {
-        Map<String, String[]> parameterMap = super.getParameterMap();
-        if(parameterMap !=null){
-            for(Map.Entry<String, String[]> entry: parameterMap.entrySet()){
-                String[] values = entry.getValue();
-                if(values != null && values.length>0){
-                    for(int i=0;i<values.length;i++){
-                        values[i]=StringEscapeUtils.escapeHtml4(values[i]);
-                    }
-                    entry.setValue(values);
-                }
-            }
-            return parameterMap;
-        }else{
-            return null;
-        }
-    }
+//    @Override
+//    public Map<String, String[]> getParameterMap() {
+//        Map<String, String[]> parameterMap = super.getParameterMap();
+//        if(parameterMap !=null){
+//            for(Map.Entry<String, String[]> entry: parameterMap.entrySet()){
+//                String[] values = entry.getValue();
+//                if(values != null && values.length>0){
+//                    for(int i=0;i<values.length;i++){
+//                        values[i]=StringEscapeUtils.escapeHtml4(values[i]);
+//                    }
+//                    entry.setValue(values);
+//                }
+//            }
+//            return parameterMap;
+//        }else{
+//            return null;
+//        }
+//    }
 
 
     @Override
