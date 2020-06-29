@@ -25,7 +25,7 @@ public class RedisService {
     public void initBloomFilter() {
         List<Integer> list=new ArrayList<Integer>();
         list.add(10);
-        if(CollectionUtils.isEmpty(list)){
+        if(null == list){
             return;
         }
         //创建布隆过滤器(默认3%误差)

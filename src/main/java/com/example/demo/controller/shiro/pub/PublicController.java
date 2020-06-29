@@ -71,4 +71,6 @@ public class PublicController {
     public String  notPermit(){
         return "你没权限访问该资源";
     }
+
+
 }
