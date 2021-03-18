@@ -154,7 +154,7 @@
         <dependency>
             <groupId>org.elasticsearch</groupId>
             <artifactId>elasticsearch</artifactId>
-            <version>7.1.1</version>
+            <version>7.11.0</version>
         </dependency>
 
 <!--        poi 相对jxl  速度快, 条数可以百万,消耗大-->
